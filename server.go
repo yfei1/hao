@@ -1,29 +1,32 @@
 package main
 
 import (
-  "net"
   "net/http"
   "fmt"
-  "os"
 )
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-    name, err := os.Hostname()
-    if err != nil {
-       fmt.Printf("Oops: %v\n", err)
-       return
-    }
-
-addrs, err := net.LookupHost(name)
-if err != nil {
-    fmt.Printf("Oops: %v\n", err)
-    return
+type Location struct {
+  Name string
+  Longtitude float32
+  Latitude float32
 }
-  title := r.URL.Path
-  fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", title, addrs)
+
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    m := Location{
+        Name: "Seattle",
+        Longtitude: 123.1,
+        Latitude: 321.1,
+    }
+    fmt.Fprint(w, m)
 }
 
 func main() {
+  mux1 := http.ServerMux{}
+  mux2 := http.ServerMux{}
+  mux1.HandleFunc("/hello/", helloHandler)
+
+  // Equivalent to http.DefaultServeMux.HandleFunc(...)
   http.HandleFunc("/hello/", helloHandler)
   http.ListenAndServe(":8080", nil)
 }
