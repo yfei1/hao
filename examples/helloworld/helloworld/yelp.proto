@@ -34,6 +34,19 @@ service YelpService {
   rpc DeleteBusiness (DeleteBusinessRequest) returns (google.protobuf.Empty) {}
   rpc GetBusiness (GetBusinessRequest) returns (Business) {}
   
+  rpc ListBusinesses (ListBusinessesRequest) returns (ListBusinessesResponse) {
+    option (google.api.http) = {
+      get: "/v1/books"
+    };
+    option (google.api.method_signature) = "parent";
+  }
+
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+    option (google.api.method_signature) = "parent";
+  }
 }
 
 // The request message containing the user's name.
@@ -69,16 +82,59 @@ message DeleteBusinessRequest {
   string b_id = 1;
 }
 
+message ListBusinessesRequest {
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      child_type: "YelpService/Business"
+    }];
+  
+  int32 page_size = 2;
+  string page_token = 3;
+  string filter = 4;
+}
+
+message ListBusinessesResponse {
+  repeated Business businesses = 1;
+  string next_page_token = 2;
+}
+
+message ListUsersRequest {
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      child_type: "YelpService/Users"
+    }];
+  
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  string next_page_token = 2;
+}
+
 message User {
-  string id = 1;
+  option (google.api.resource) = {
+    type: "YelpService/User"
+    pattern: "users/{user}"
+  };
+
+  string name = 1;
   Address address = 2;
   repeated Review reviews = 3;
   Metadata metadata = 4;
 }
 
 message Business {
-  string id =1;
-  string name = 2;
+  option (google.api.resource) = {
+    type: "YelpService/Business"
+    pattern: "businesses/{business}"
+  };
+
+  string name = 1;
+  string alias = 2;
   Address address = 3;
   Profile profile = 4;
   Status status = 5;
@@ -139,9 +195,4 @@ message Metadata {
   google.protobuf.Timestamp last_update_date = 2;
   google.protobuf.Timestamp delete_date = 3;
 
-}
-
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
 }
