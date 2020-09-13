@@ -34,19 +34,8 @@ service YelpService {
   rpc DeleteBusiness (DeleteBusinessRequest) returns (google.protobuf.Empty) {}
   rpc GetBusiness (GetBusinessRequest) returns (Business) {}
   
-  rpc ListBusinesses (ListBusinessesRequest) returns (ListBusinessesResponse) {
-    option (google.api.http) = {
-      get: "/v1/books"
-    };
-    option (google.api.method_signature) = "parent";
-  }
-
-  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1/users"
-    };
-    option (google.api.method_signature) = "parent";
-  }
+  rpc ListBusinesses (ListBusinessesRequest) returns (ListBusinessesResponse) {}
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {}
 }
 
 // The request message containing the user's name.
@@ -83,11 +72,7 @@ message DeleteBusinessRequest {
 }
 
 message ListBusinessesRequest {
-  string parent = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      child_type: "YelpService/Business"
-    }];
+  string parent = 1;
   
   int32 page_size = 2;
   string page_token = 3;
@@ -100,11 +85,7 @@ message ListBusinessesResponse {
 }
 
 message ListUsersRequest {
-  string parent = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      child_type: "YelpService/Users"
-    }];
+  string parent = 1;
   
   int32 page_size = 2;
   string page_token = 3;
@@ -116,10 +97,7 @@ message ListUsersResponse {
 }
 
 message User {
-  option (google.api.resource) = {
-    type: "YelpService/User"
-    pattern: "users/{user}"
-  };
+
 
   string name = 1;
   Address address = 2;
@@ -128,10 +106,7 @@ message User {
 }
 
 message Business {
-  option (google.api.resource) = {
-    type: "YelpService/Business"
-    pattern: "businesses/{business}"
-  };
+
 
   string name = 1;
   string alias = 2;
