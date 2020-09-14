@@ -1,15 +1,20 @@
-module google.golang.org/grpc
+module sherr-99/hao
 
-go 1.11
+go 1.15
 
 require (
-	github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f
-	github.com/envoyproxy/go-control-plane v0.9.4
+	github.com/cncf/udpa/go v0.0.0-20200909154343-1f710aca26a9
+	github.com/envoyproxy/go-control-plane v0.9.6
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/golang/protobuf v1.3.3
-	github.com/google/go-cmp v0.4.0
-	golang.org/x/net v0.0.0-20190311183353-d8887717615a
-	golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be
-	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a
-	google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55
+	github.com/golang/mock v1.4.4
+	github.com/golang/protobuf v1.4.2
+	github.com/google/go-cmp v0.5.2
+	github.com/google/uuid v1.1.2
+	golang.org/x/net v0.0.0-20200904194848-62affa334b73
+	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43
+	golang.org/x/sys v0.0.0-20200909081042-eff7692f9009
+	google.golang.org/genproto v0.0.0-20200911024640-645f7a48b24f
+	google.golang.org/grpc v1.32.0
+	google.golang.org/grpc/examples v0.0.0-20200910201057-6591123024b3
+	google.golang.org/protobuf v1.25.0
 )

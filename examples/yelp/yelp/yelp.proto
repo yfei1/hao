@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-
+option go_package = "github.com/sherr—99/hao/examples/yelp";
 
 package yelp;
 
@@ -117,9 +117,9 @@ message Business {
   Metadata metadata = 7;
 
   enum Status {
-    OPEN = 1;
-    CLOSED = 2;
-    PERMANENTLYCLOSED = 3;
+    OPEN = 0;
+    CLOSED = 1;
+    PERMANENTLYCLOSED = 2;
   }
 
   message Profile {
@@ -135,24 +135,24 @@ message Business {
     }
 
     enum Feature {
-      DELIVERY = 1;
-      TAKEOUT = 2;
-      SITDOWNDINING = 3;
+      DELIVERY = 0;
+      TAKEOUT = 1;
+      SITDOWNDINING = 2;
     }
 
     enum Category {
-      JAP = 1;
-      CHN = 2;
-      MEX = 3;
+      JAP = 0;
+      CHN = 1;
+      MEX = 2;
     }
   }
 }
 
 message Address {
   string location = 1;
-  float32 longitude = 2;
-  float32 latitude = 3;
-  int32 zipcode = 4;
+  int32 longitude = 2;
+  float latitude = 3;
+  float zipcode = 4;
 }
 
 message Review {
