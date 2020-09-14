@@ -1,0 +1,173 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option go_package = "github.com/sherr—99/hao/examples/yelp";
+
+package yelp;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// The greeting service definition.
+service YelpService {
+  // Sends a greeting
+  rpc CreateUser (CreateUserRequest) returns (User) {}
+  rpc UpdateUser (UpdateUserRequest) returns (User) {}
+  rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {}
+  rpc GetUser (GetUserRequest) returns (User) {}
+
+  rpc CreateBusiness (CreateBusinessRequest) returns (Business) {}
+  rpc UpdateBusiness (UpdateBusinessRequest) returns (Business) {}
+  rpc DeleteBusiness (DeleteBusinessRequest) returns (google.protobuf.Empty) {}
+  rpc GetBusiness (GetBusinessRequest) returns (Business) {}
+  
+  rpc ListBusinesses (ListBusinessesRequest) returns (ListBusinessesResponse) {}
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {}
+}
+
+// The request message containing the user's name.
+message CreateUserRequest {
+  User user = 1;
+}
+
+message GetUserRequest {
+  string u_id = 1;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message DeleteUserRequest {
+  string u_id = 1;
+}
+
+message CreateBusinessRequest {
+  Business business = 1;
+}
+
+message GetBusinessRequest {
+  string b_id = 1;
+}
+
+message UpdateBusinessRequest {
+  Business business = 1;
+}
+
+message DeleteBusinessRequest {
+  string b_id = 1;
+}
+
+message ListBusinessesRequest {
+  string parent = 1;
+  
+  int32 page_size = 2;
+  string page_token = 3;
+  string filter = 4;
+}
+
+message ListBusinessesResponse {
+  repeated Business businesses = 1;
+  string next_page_token = 2;
+}
+
+message ListUsersRequest {
+  string parent = 1;
+  
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  string next_page_token = 2;
+}
+
+message User {
+
+
+  string name = 1;
+  Address address = 2;
+  repeated Review reviews = 3;
+  Metadata metadata = 4;
+}
+
+message Business {
+
+
+  string name = 1;
+  string alias = 2;
+  Address address = 3;
+  Profile profile = 4;
+  Status status = 5;
+  repeated Review reviews = 6;
+  Metadata metadata = 7;
+
+  enum Status {
+    OPEN = 0;
+    CLOSED = 1;
+    PERMANENTLYCLOSED = 2;
+  }
+
+  message Profile {
+    Time open_hour = 1;
+    Time closed_hour = 2;
+    repeated Feature services = 3;
+    int32 affordability = 4;
+    repeated Category categories = 5;
+
+    message Time {
+      int32 hour = 1;
+      int32 minute = 2;
+    }
+
+    enum Feature {
+      DELIVERY = 0;
+      TAKEOUT = 1;
+      SITDOWNDINING = 2;
+    }
+
+    enum Category {
+      JAP = 0;
+      CHN = 1;
+      MEX = 2;
+    }
+  }
+}
+
+message Address {
+  string location = 1;
+  int32 longitude = 2;
+  float latitude = 3;
+  float zipcode = 4;
+}
+
+message Review {
+  string id = 1;
+  string content = 2;
+  repeated string photos = 3;
+  Metadata metadata = 4;
+  int32 star = 5;
+  repeated string child_ids = 6;
+  string parent_id = 7;
+}
+
+message Metadata {
+  google.protobuf.Timestamp create_date = 1;
+  google.protobuf.Timestamp last_update_date = 2;
+  google.protobuf.Timestamp delete_date = 3;
+
+}
