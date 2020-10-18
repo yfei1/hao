@@ -5,9 +5,10 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
-	"github.com/sherr—99/hao/codes"
-	pb "github.com/sherr—99/hao/examples/yelp"
-	"github.com/sherr—99/hao/status"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
+	pb "github.com/yfei1/hao/examples/yelp/yelp"
 )
 
 var userMap map[string]*pb.User = map[string]*pb.User{}
